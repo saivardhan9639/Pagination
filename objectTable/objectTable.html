@@ -1,0 +1,63 @@
+<template>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                  <tr class="slds-line-height_reset">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Primary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <template for:each={dataList} for:item="data">
+                        <tr key={data.Id} class="slds-hint-parent">
+                            <td>{data.FirstName}</td>
+                            <td>{data.LastName}</td>
+                            <td>{data.Email}</td>
+                            <td>{data.Phone}</td>
+                            <td>
+                                <lightning-input label="" type="checkbox" checked={data.Primary__c} variant="label-hidden"
+                                                 ></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-button variant="brand-outline" label="Edit" name={data.Id}
+                                                  onclick={handleEdit}></lightning-button>
+                            </td>
+                          </tr>
+                    </template>
+                </tbody>
+              </table>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-button label="First" onclick={handleFirst}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-button label="Previous" onclick={handlePrevious} disabled={hidePrevious}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-button label="Next" onclick={handleNext} disabled={hideNext}></lightning-button>
+        </lightning-layout-item>  
+        <lightning-layout-item>
+            <lightning-button label="Last" onclick={handleLast}></lightning-button>
+         </lightning-layout-item>
+         <lightning-layout-item> 
+             <div class="slds-clearfix">
+                <div class="slds-float--right">
+                    <select class="slds-select slds-float--right" name = "Select" onchange={changeHandler}>
+                        <option value="">Page size</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select> 
+                 </div>
+             </div>
+        </lightning-layout-item>  
+    </lightning-layout>
+    <template if:true={showModal}>
+        <c-object-table-edit-modal con-id={conId} edit-data={editData} oncancel={handleCancel} onsave={handleSave}></c-object-table-edit-modal>
+    </template>
+</template>
