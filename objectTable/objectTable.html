@@ -4,11 +4,9 @@
             <table class="slds-table slds-table_cell-buffer slds-table_bordered">
                 <thead>
                   <tr class="slds-line-height_reset">
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Primary</th>
+                    <template for:each={fieldNames} for:item="field">
+                            <th key={field}>{field}</th>
+                    </template>
                   </tr>
                 </thead>
                 <tbody>
