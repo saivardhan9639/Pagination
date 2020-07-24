@@ -1,47 +1,32 @@
 import { LightningElement,api,track} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-import updateContact from '@salesforce/apex/ObjectTableController.updateContact';
+import updateRecord from '@salesforce/apex/ObjectTableController.updateRecord';
 export default class ObjectTableEditModal extends LightningElement {
-    @api conId;
     @api editData;
-    @track firstName;
-    @track lastName;
-    @track email;
-    @track phone;
-    @track primary;
-    connectedCallback(){
-        this.firstName=this.editData.FirstName;
-        this.lastName=this.editData.LastName;
-        this.email=this.editData.Email;
-        this.phone=this.editData.Phone;
-        this.primary=this.editData.Primary__c;
-        console.log(this.conId);
-        console.log(JSON.stringify(this.editData));
-        
-    }
     
     handleCancel(){
         this.dispatchEvent(new CustomEvent('cancel',{detail:''}));
     }
     handleChange(event){
         if(event.target.label =='First Name'){
-            this.firstName=event.target.value;
+            this.editData={Id:this.editData.Id,FirstName:event.target.value,LastName:this.editData.LastName,Email:this.editData.Email,Phone:this.editData.Phone,Primary__c:this.editData.Primary__c};
         }
         if(event.target.label =='Last Name'){
-            this.lastName=event.target.value;
+            this.editData={Id:this.editData.Id,FirstName:this.editData.FirstName,LastName:event.target.value,Email:this.editData.Email,Phone:this.editData.Phone,Primary__c:this.editData.Primary__c};
         }
         if(event.target.label==='Email'){
-            this.email=event.target.value;
+            this.editData={Id:this.editData.Id,FirstName:this.editData.FirstName,LastName:this.editData.LastName,Email:event.target.value,Phone:this.editData.Phone,Primary__c:this.editData.Primary__c};
         }
         if(event.target.label==='Phone'){
-            this.phone=event.target.value;
+            this.editData={Id:this.editData.Id,FirstName:this.editData.FirstName,LastName:this.editData.LastName,Email:this.editData.Email,Phone:event.target.value,Primary__c:this.editData.Primary__c};
         }
         if(event.target.label==='Primary'){
-            this.primary=event.target.checked;
+            this.editData={Id:this.editData.Id,FirstName:this.editData.FirstName,LastName:this.editData.LastName,Email:this.editData.Email,Phone:this.editData.Phone,Primary__c:event.target.checked};
         }
     }
+    
     handleUpdate(){
-        updateContact({conId:this.conId,firstName:this.firstName,lastName:this.lastName,email:this.email,phone:this.phone,primary:this.primary}).then(result=>{
+        updateRecord({obj:this.editData}).then(result=>{
             const event = new ShowToastEvent({
                 title: 'Success!',
                 message: 'Record updated',

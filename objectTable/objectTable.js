@@ -19,15 +19,16 @@ export default class ObjectTable extends LightningElement {
     @track hidePrevious=true;
     @track hideNext=true;
     
-    //@track options=[{value:10,label:10},{value:20,label:20},{value:30,label:30},{value:50,label:50}];
+    
     
     connectedCallback(){
         this.getData();
     }
     getData(){
-        getData({ObjectName:this.objectName,fieldArray:this.fieldNames}).then(response=>{
+        getData({objectName:this.objectName,fieldArray:this.fieldNames}).then(response=>{
             if(response){
                 this.responseList=response;
+                console.log(JSON.stringify(response));
                 if(this.flag){
                     this.initialSetup();
                 }
@@ -48,8 +49,6 @@ export default class ObjectTable extends LightningElement {
         if(this.totalPage>1){
             this.hideNext=false;
         }
-        //console.log('total record count : '+this.responseList.length);
-        //console.log('total page: '+this.totalPage);
     }
     
     changeHandler(event){
@@ -87,7 +86,6 @@ export default class ObjectTable extends LightningElement {
         this.displayRecordPerPage(this.totalPage);
     }
     displayRecordPerPage(page){
-        console.log('In display');
         this.startingRecord = ((page -1) * this.pageSize) ;
         this.endingRecord = (this.pageSize * page);
         this.endingRecord = (this.endingRecord > this.totalRecountCount) 
@@ -114,12 +112,3 @@ export default class ObjectTable extends LightningElement {
         
     }
 }
-/*@wire(getData,{ObjectName:this.objectName,fieldArray:this.fieldNames})
-    wiredContacts({error,data}){
-        if(data){
-            this.contactList=data;
-        }
-        if(error){
-            console.log(error.body.message);
-        }
-    }*/

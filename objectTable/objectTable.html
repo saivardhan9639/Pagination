@@ -37,8 +37,9 @@
         <lightning-layout-item>
             <lightning-button label="Previous" onclick={handlePrevious} disabled={hidePrevious}></lightning-button>
         </lightning-layout-item>
+        <lightning-layout-item flexibility="grow"></lightning-layout-item>
         <lightning-layout-item>
-            <lightning-button label="Next" onclick={handleNext} disabled={hideNext}></lightning-button>
+            <lightning-button label="Next" onclick={handleNext}  disabled={hideNext}></lightning-button>
         </lightning-layout-item>  
         <lightning-layout-item>
             <lightning-button label="Last" onclick={handleLast}></lightning-button>
@@ -58,6 +59,6 @@
         </lightning-layout-item>  
     </lightning-layout>
     <template if:true={showModal}>
-        <c-object-table-edit-modal con-id={conId} edit-data={editData} oncancel={handleCancel} onsave={handleSave}></c-object-table-edit-modal>
+        <c-object-table-edit-modal edit-data={editData} oncancel={handleCancel} onsave={handleSave}></c-object-table-edit-modal>
     </template>
 </template>
